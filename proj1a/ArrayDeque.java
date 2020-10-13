@@ -58,14 +58,14 @@ public class ArrayDeque<T> {
         if (nextFirst < nextLast) {
             int flag = nextFirst + 1;
             while (flag < nextLast) {
-                System.out.print(items[flag] +" ");
+                System.out.print(items[flag] + " ");
                 flag += 1;
             }
         } else {
             // When nextFirst is greater than nextLast:
             int flag = nextFirst;
             while (flag < items.length) {
-                System.out.print(items[flag] +" ");
+                System.out.print(items[flag] + " ");
                 flag += 1;
             }
             for (int i = 0; i < nextLast; i++) {
@@ -76,44 +76,55 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
         nextFirst = (nextFirst + 1) % items.length;
         T removedFirst = items[nextFirst];
         items[nextFirst] = null;
+        size -= 1;
         return removedFirst;
     }
 
     public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
         nextLast = (nextLast - 1 + items.length) % items.length;
         T removedLast = items[nextLast];
         items[nextLast] = null;
+        size -= 1;
         return removedLast;
     }
 
     public T get(int index) {
-        return items[index];
+        if (index > items.length) {
+            return null;
+        }
+        return items[(index + nextFirst + 1) % items.length];
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> A = new ArrayDeque<>();
-        A.addFirst(15);
-        A.addFirst(10);
-        A.addFirst(5);
-        A.addLast(20);
-        A.addLast(25);
-        A.addFirst(3);
-        A.addFirst(2);
-        A.addFirst(1);
-        A.addFirst(0);
-        A.addFirst(-1);
-        A.addFirst(-2);
-        A.addLast(100);
-        A.addLast(100);
-        A.addLast(100);
-        A.addLast(100);
-        A.addLast(100);
-        A.addLast(100);
-        A.addLast(100);
-        A.printDeque();
-    }
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> A = new ArrayDeque<>();
+//        A.addFirst(15);
+//        A.addFirst(10);
+//        A.addFirst(5);
+//        A.addLast(20);
+//        A.addLast(25);
+//        A.addFirst(3);
+//        A.addFirst(2);
+//        A.addFirst(1);
+//        A.addFirst(0);
+//        A.addFirst(-1);
+//        A.addFirst(-2);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.addLast(100);
+//        A.printDeque();
+//    }
 
 }

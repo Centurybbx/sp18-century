@@ -60,6 +60,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
         Node firstNode = sentinel.next;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
@@ -68,6 +71,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
         Node lastNode = sentinel.prev;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
@@ -76,6 +82,9 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
+        if (this.isEmpty()) {
+            return null;
+        }
         Node pointer = sentinel;
         int flag = 0;
         while (flag < index) {

@@ -25,6 +25,13 @@ public class ArrayDeque<T> {
             System.arraycopy(initArr, currentFirst, newArr, 0, length);
             nextFirst = capacity - 1;
             nextLast = length;
+        } else {
+            int lengthFirsts = capacity - currentFirst;
+            int newCurrentFirst = capacity - lengthFirsts;
+            int lengthLasts = nextLast;
+            System.arraycopy(items, currentFirst, newArr, newCurrentFirst, lengthFirsts);
+            System.arraycopy(items, 0, newArr, 0, lengthLasts);
+            nextFirst = capacity - lengthFirsts - 1;
         }
         initArr = newArr;
         items = initArr;
@@ -60,24 +67,12 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque() {
-        if (nextFirst < nextLast) {
-            int flag = nextFirst + 1;
-            while (flag < nextLast) {
-                System.out.print(items[flag] + " ");
-                flag += 1;
-            }
-        } else {
-            // When nextFirst is greater than nextLast:
-            int flag = nextFirst;
-            while (flag < items.length) {
-                System.out.print(items[flag] + " ");
-                flag += 1;
-            }
-            for (int i = 0; i < nextLast; i++) {
-                System.out.print(items[i] + " ");
-            }
+        int currentFirst = (nextFirst + 1) % items.length;
+        while (currentFirst != nextLast) {
+            System.out.print(items[currentFirst] + " ");
+            currentFirst = (currentFirst + 1) % items.length;
         }
-
+        System.out.println();
     }
 
     public T removeFirst() {
@@ -109,15 +104,21 @@ public class ArrayDeque<T> {
         return items[(index + nextFirst + 1) % items.length];
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> A = new ArrayDeque<>();
-//        int i = 1;
-//        while (i <= 9) {
-//            A.addLast(i);
-//            i += 1;
-//        }
-//        System.out.println(A.removeLast());
-//        System.out.println(A.get(3));
-//    }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> A = new ArrayDeque<>();
+        int i = 1;
+        while (i <= 9) {
+            A.addLast(i);
+            i += 1;
+        }
+        while (i < 15) {
+            A.addFirst(i);
+            i += 1;
+        }
+        System.out.println(A.removeLast());
+        A.printDeque();
+        System.out.println(A.get(8));
+        System.out.println(A.get(7));
+    }
 
 }

@@ -12,15 +12,20 @@ public class ArrayDeque<T> {
         initArr = (T[]) new Object[INIT_CAPACITY];
         items = initArr;
         size = 0;
-        nextFirst = (initArr.length - 1) / 2;
-        nextLast = nextFirst + 1;
+        nextFirst = initArr.length - 1;
+        nextLast = 0;
     }
 
     private void resize(int capacity) {
         T[] newArr = (T[]) new Object[capacity];
-        nextFirst = (newArr.length - 1) / 2 - initArr.length / 2;
-        nextLast = nextFirst + initArr.length + 1;
-        System.arraycopy(initArr, 0, newArr, nextFirst + 1, initArr.length);
+        int currentFirst = (nextFirst + 1) % items.length;
+        int currentLast = (nextLast - 1 + items.length) % items.length;
+        if (currentFirst < currentLast) {
+            int length = currentLast - currentFirst + 1;
+            System.arraycopy(initArr, currentFirst, newArr, 0, length);
+            nextFirst = capacity - 1;
+            nextLast = length;
+        }
         initArr = newArr;
         items = initArr;
     }
@@ -106,25 +111,13 @@ public class ArrayDeque<T> {
 
 //    public static void main(String[] args) {
 //        ArrayDeque<Integer> A = new ArrayDeque<>();
-//        A.addFirst(15);
-//        A.addFirst(10);
-//        A.addFirst(5);
-//        A.addLast(20);
-//        A.addLast(25);
-//        A.addFirst(3);
-//        A.addFirst(2);
-//        A.addFirst(1);
-//        A.addFirst(0);
-//        A.addFirst(-1);
-//        A.addFirst(-2);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.addLast(100);
-//        A.printDeque();
+//        int i = 1;
+//        while (i <= 9) {
+//            A.addLast(i);
+//            i += 1;
+//        }
+//        System.out.println(A.removeLast());
+//        System.out.println(A.get(3));
 //    }
 
 }

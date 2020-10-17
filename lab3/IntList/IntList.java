@@ -11,11 +11,11 @@ public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -81,8 +81,19 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        if (A == null) {
+            A = B;
+            return A;
+        }
+        if (B == null) {
+            return A;
+        }
+        IntList L = A;
+        while (L.rest != null) {
+            L = L.rest;
+        }
+        L.rest = B;
+        return A;
     }
 
     /**
@@ -90,8 +101,30 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList intList = new IntList();
+        // a pointer points the object intList
+        IntList listPointer = intList;
+        if (A == null) {
+            if (B == null) {
+                return null;
+            }
+            return B;
+        }
+
+        IntList p1 = A;
+        while (p1.rest != null) {
+            listPointer.first = p1.first;
+            listPointer.rest = new IntList(p1.rest.first, null);
+            listPointer = listPointer.rest;
+            p1 = p1.rest;
+        }
+        IntList p2 = B;
+        while (p2 != null) {
+            listPointer.rest = new IntList(p2.first, null);
+            listPointer = listPointer.rest;
+            p2 = p2.rest;
+        }
+        return intList;
     }
 
     /**
@@ -100,18 +133,17 @@ public class IntList {
      * as an input, returns null.
      */
     public static IntList reverse(IntList A) {
-        if (A == null) {
-            return A;
+        if (A == null || A.rest == null) {
+            return null;
         }
-        IntList reversed, restOfList;
-        for (reversed = null; A != null; A = restOfList) {
-            restOfList = A.rest;
-            A.rest = reversed;
-            reversed = A;
+        IntList p = A;
+        IntList L = new IntList(p.first, null);
+        while (p.rest != null) {
+            p = p.rest;
+            L = new IntList(p.first, L);
         }
-        return reversed;
+        return L;
     }
-
 
 
 

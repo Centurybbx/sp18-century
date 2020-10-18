@@ -23,9 +23,20 @@ public class Palindrome {
         return reversed.equals(word);
     } */
 
+    private String getReversedHelper(String word, CharacterComparator cc) {
+        word = word.toLowerCase();
+        Deque<Character> characterDeque = wordToDeque(word);
+        String reversed = "";
+        while (characterDeque.size() != 0) {
+            reversed += characterDeque.removeLast();
+        }
+        return reversed;
+    }
+
     /** using wordToDeque method */
     public boolean isPalindrome(String word) {
-        if (word.length() == 0 || word.length() == 1) {
+        int len = word.length();
+        if (len == 0 || len == 1) {
             return true;
         }
         word = word.toLowerCase();
@@ -37,23 +48,27 @@ public class Palindrome {
         return reversed.equals(word);
     }
 
+    private boolean containsMiddle(String word) {
+        if (word.length() % 2 == 0) {
+            return false;
+        }
+        return true;
+    }
+
     /** overloaded method, using CharacterComparator */
     public boolean isPalindrome(String word, CharacterComparator cc) {
         int len = word.length();
         if (len == 0 || len == 1) {
             return true;
         }
-        word = word.toLowerCase();
-        Deque<Character> characterDeque = wordToDeque(word);
-        String reversed = "";
-        while (characterDeque.size() != 0) {
-            reversed += characterDeque.removeLast();
-        }
+        String reversed = getReversedHelper(word, cc);
         int i = 0;
         while (i < len) {
-            /** To ensure the two characters are off by N(according to the comparator)
-             * and when the two characters are the same, it also should be passed */
-            if (!(cc.equalChars(word.charAt(i), reversed.charAt(i)) || Math.abs(word.charAt(i) - reversed.charAt(i)) == 0)) {
+            if (containsMiddle(word) && i == len/2) {
+                i += 1;
+                continue;
+            }
+            if (!cc.equalChars(word.charAt(i), reversed.charAt(i))) {
                 return false;
             }
             i += 1;

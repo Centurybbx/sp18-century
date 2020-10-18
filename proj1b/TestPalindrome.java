@@ -31,12 +31,16 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("ab", offByOne));
         assertTrue(palindrome.isPalindrome("a", offByOne));
         assertTrue(palindrome.isPalindrome("", offByOne));
+        assertTrue(palindrome.isPalindrome("detrude", offByOne));
         assertFalse(palindrome.isPalindrome("century", offByOne));
     }
 
     @Test
     public void testByNIsPalindrome() {
-
+        OffByN offBy3 = new OffByN(3);
+        assertTrue(palindrome.isPalindrome("csadvf", offBy3));
+        assertTrue(palindrome.isPalindrome("csaedvf", offBy3));
+        assertFalse(palindrome.isPalindrome("century", offBy3));
     }
 
 //    Uncomment this class once you've created your Palindrome class.

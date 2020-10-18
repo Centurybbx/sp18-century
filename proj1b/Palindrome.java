@@ -51,7 +51,9 @@ public class Palindrome {
         }
         int i = 0;
         while (i < len) {
-            if (!cc.equalChars(word.charAt(i), reversed.charAt(i))) {
+            /** To ensure the two characters are off by N(according to the comparator)
+             * and when the two characters are the same, it also should be passed */
+            if (!(cc.equalChars(word.charAt(i), reversed.charAt(i)) || Math.abs(word.charAt(i) - reversed.charAt(i)) == 0)) {
                 return false;
             }
             i += 1;

@@ -47,10 +47,4 @@ public class GuitarString {
         return buffer.peek();
     }
 
-    @Override
-    public String toString() {
-        return "GuitarString{" +
-                "buffer=" + buffer +
-                '}';
-    }
 }

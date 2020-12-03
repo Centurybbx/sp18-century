@@ -42,12 +42,10 @@ public class MemoryGame {
         StdDraw.setYscale(0, this.height);
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
-        //TODO: Initialize random number generator
         this.rand = new Random(seed);
     }
 
     public String generateRandomString(int n) {
-        //TODO: Generate random string of letters of length n
         StringBuilder sb = new StringBuilder(n);
         for (int i = 0; i < n; i++) {
             int randomIndex = (int) (Math.random() * this.CHARACTERS.length);
@@ -57,19 +55,22 @@ public class MemoryGame {
     }
 
     public void drawFrame(String s) {
-        //TODO: Take the string and display it in the center of the screen
-        //TODO: If game is not over, display relevant game information at the top of the screen
         StdDraw.clear(Color.black);
-        StdDraw.setFont(new Font("Monaco", Font.BOLD, 30));
         StdDraw.setPenColor(Color.white);
+        int headHeight = this.height - 2;
         if (!this.gameOver) {
+            StdDraw.setFont(new Font("Monaco", Font.BOLD, 20));
+            StdDraw.text(3, headHeight, "Round: " + this.round);
+            StdDraw.text(this.width / 2, headHeight, playerTurn ? "Type!" : "Watch!");
+            StdDraw.text(this.width - 5, headHeight, ENCOURAGEMENT[round % ENCOURAGEMENT.length]);
+            StdDraw.line(0, height - 4, width, height - 4);
         }
+        StdDraw.setFont(new Font("Monaco", Font.BOLD, 30));
         StdDraw.text(this.width / 2, this.height / 2, s);
         StdDraw.show();
     }
 
     public void flashSequence(String letters) {
-        //TODO: Display each character in letters, making sure to blank the screen between letters
         for (int i = 0; i < letters.length(); i++) {
             drawFrame(letters.substring(i, i + 1));
             StdDraw.pause(1000);
@@ -79,9 +80,9 @@ public class MemoryGame {
     }
 
     public String solicitNCharsInput(int n) {
-        //TODO: Read n letters of player input
         StringBuilder sb = new StringBuilder(n);
         while (StdDraw.hasNextKeyTyped()) {
+            this.playerTurn = true;
             char key = StdDraw.nextKeyTyped();
             sb.append(key);
         }
@@ -89,11 +90,10 @@ public class MemoryGame {
     }
 
     public void startGame() {
-        //TODO: Set any relevant variables before the game starts
         round = 1;
         gameOver = false;
-        //TODO: Establish Game loop
         while (!gameOver) {
+            this.playerTurn = false;
             drawFrame("Round:" + round);
             StdDraw.pause(1000);
 
